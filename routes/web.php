@@ -30,19 +30,84 @@ Route::get('link', function () {
 
 });
 
+Route::get('all/clear', function () {
+    \Illuminate\Support\Facades\Artisan::call('cache:clear');
+    \Illuminate\Support\Facades\Artisan::call('view:clear');
+    \Illuminate\Support\Facades\Artisan::call('route:clear');
+    \Illuminate\Support\Facades\Artisan::call('config:clear');
+    return response()->json('Everything Cleared Successfully');
+});
+
 
 //Frontend
 
 Route::post('/language', [\App\Http\Controllers\Frontend\LanguageController::class, 'changeLanguage'])->name('language.change');
 Route::get('/product/{slug}', 'HomeController@product')->name('product');
 Route::post('/subcategories/get_subcategories_by_category', [\App\Http\Controllers\ControlPanel\SubCategoryController::class, 'get_subcategories_by_category'])->name('subcategories.get_subcategories_by_category');
-//Route::post('/subcategories/get_subcategories_by_category', 'SubCategoryController@get_subcategories_by_category')->name('subcategories.get_subcategories_by_category');
 Route::post('/subsubcategories/get_subsubcategories_by_subcategory', [\App\Http\Controllers\ControlPanel\SubSubCategoryController::class, 'get_subsubcategories_by_subcategory'])->name('subsubcategories.get_subsubcategories_by_subcategory');
 Route::post('/subsubcategories/get_brands_by_subsubcategory', [\App\Http\Controllers\ControlPanel\SubSubCategoryController::class, 'get_brands_by_subsubcategory'])->name('subsubcategories.get_brands_by_subsubcategory');
 
 Route::get('/shops/visit/{slug}', 'HomeController@shop')->name('shop.visit');
+//Route::get('/customer/{id}', [\App\Http\Controllers\ControlPanel\SocialController::class, 'userProfile'])->name('user_profile');
 
-Route::get('/', [HomeController::class, 'index']);
+Route::post('/language', 'LanguageController@changeLanguage')->name('language.change');
+Route::post('/currency', 'CurrencyController@changeCurrency')->name('currency.change');
+
+Route::post('/ajax-search', 'HomeController@ajax_search')->name('search.ajax');
+
+Route::group(['middleware' => ['user', 'verified']], function()
+{
+    Route::get('newsfeed', 'NewsFeedController@index')->name('newsfeed');
+    Route::post('createpost', 'SocialPostController@createPost')->name('createpost');
+    Route::post('editpost', 'SocialPostController@editPost')->name('editpost');
+    Route::post('updatepost', 'SocialPostController@updatePost')->name('updatepost');
+    Route::post('deletepostimage', 'SocialPostController@deletePostImage')->name('deletepostimage');
+    Route::post('deletepostvideo', 'SocialPostController@deletePostVideo')->name('deletepostvideo');
+    Route::post('deletepost', 'SocialPostController@deletePost')->name('deletepost');
+});
+
+
+Route::get('/product/{slug}', 'HomeController@product')->name('product');
+Route::get('/products', 'HomeController@listing')->name('products');
+Route::get('/search?category={category_slug}', 'HomeController@search')->name('products.category');
+Route::get('/search?subcategory={subcategory_slug}', 'HomeController@search')->name('products.subcategory');
+Route::get('/search?subsubcategory={subsubcategory_slug}', 'HomeController@search')->name('products.subsubcategory');
+Route::get('/search?brand={brand_slug}', 'HomeController@search')->name('products.brand');
+Route::post('/product/variant_price', 'HomeController@variant_price')->name('products.variant_price');
+Route::get('/shops/visit/{slug}', 'HomeController@shop')->name('shop.visit');
+Route::get('/shops/visit/{slug}/{type}', 'HomeController@filter_shop')->name('shop.visit.type');
+
+
+Route::get('/compare', 'CompareController@index')->name('compare');
+Route::get('/compare/reset', 'CompareController@reset')->name('compare.reset');
+Route::post('/compare/addToCompare', 'CompareController@addToCompare')->name('compare.addToCompare');
+
+
+//Route::get('/cart', 'CartController@index')->name('cart');
+Route::post('/cart/nav-cart-items', 'CartController@updateNavCart')->name('cart.nav_cart');
+Route::post('/cart/show-cart-modal', 'CartController@showCartModal')->name('cart.showCartModal');
+Route::post('/cart/addtocart', 'CartController@addToCart')->name('cart.addToCart');
+Route::post('/cart/removeFromCart', 'CartController@removeFromCart')->name('cart.removeFromCart');
+Route::post('/cart/updateQuantity', 'CartController@updateQuantity')->name('cart.updateQuantity');
+
+
+
+
+Route::get('/search?category={category_slug}', 'HomeController@search')->name('products.category');
+Route::get('/search', 'HomeController@search')->name('search');
+Route::get('/categories', 'HomeController@all_categories')->name('categories.all');
+
+Route::post('/category/nav-element-list', 'HomeController@get_category_items')->name('category.elements');
+
+Route::get('/sellerpolicy', 'HomeController@sellerpolicy')->name('sellerpolicy');
+Route::get('/returnpolicy', 'HomeController@returnpolicy')->name('returnpolicy');
+Route::get('/supportpolicy', 'HomeController@supportpolicy')->name('supportpolicy');
+Route::get('/terms', 'HomeController@terms')->name('terms');
+Route::get('/privacypolicy', 'HomeController@privacypolicy')->name('privacypolicy');
+
+
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('get/posts/for/home/page', [HomeController::class, 'getPostsForHomePage']);
 Route::get('get/featured/categories/for/home/page', [HomeController::class, 'getFeaturedCategories']);
 
@@ -52,7 +117,7 @@ Route::get('get/products/for/shop', [ShopController::class, 'getProductsForShop'
 Route::get('product/{product_id}', [ProductController::class, 'index']);
 Route::get('get/other/related/products', [ProductController::class, 'getOtherRelatedProducts']);
 
-Route::get('cart', [CartController::class, 'index']);
+Route::get('cart', [CartController::class, 'index'])->name('cart');
 Route::get('get/cart/items', [CartController::class, 'getCartItems']);
 Route::get('add/to/cart', [CartController::class, 'addToCart']);
 
@@ -92,10 +157,10 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
-//////////////////////////////USER PANEL////////////////////////////////////////////////
+//////////////////////////////Customer PANEL////////////////////////////////////////////////
 
-Route::group(['middleware' => ['user', 'verified']], function(){
-    Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
+Route::group(['prefix' => 'account', 'middleware' => ['redirect.to.dashboard.if.authenticated']], function(){
+    Route::get('/dashboard', [\App\Http\Controllers\AccountPanel\DashboardController::class, 'loadDashboard'])->name('account.dashboard');
     Route::get('/profile', 'HomeController@profile')->name('profile');
     Route::post('/customer/update-profile', 'HomeController@customer_update_profile')->name('customer.profile.update');
     Route::post('/seller/update-profile', 'HomeController@seller_update_profile')->name('seller.profile.update');
@@ -114,7 +179,10 @@ Route::group(['middleware' => ['user', 'verified']], function(){
     Route::post('support_ticket/reply',[\App\Http\Controllers\ControlPanel\SupportTicketController::class, 'seller_store'])->name('support_ticket.seller_store');
 });
 
-Route::group(['prefix' =>'seller', 'middleware' => ['seller', 'verified']], function(){
+//////////////////////////////Seller PANEL////////////////////////////////////////////////
+
+Route::group(['prefix' =>'seller', 'middleware' => ['redirect.to.dashboard.if.authenticated']], function() {
+    Route::get('/dashboard', [\App\Http\Controllers\SellerPanel\DashboardController::class, 'loadDashboard'])->name('seller.dashboard');
     Route::get('/products', 'HomeController@seller_product_list')->name('seller.products');
     Route::get('/product/upload', 'HomeController@show_product_upload_form')->name('seller.products.upload');
     Route::get('/product/{id}/edit', 'HomeController@show_product_edit_form')->name('seller.products.edit');
@@ -162,8 +230,9 @@ Route::group(['middleware' => ['auth']], function(){
 
 /////////////////////////////////ADMIN PANEL////////////////////////////////////
 
-Route::get('/admin/dashboard', [\App\Http\Controllers\ControlPanel\DashboardController::class, 'loadDashboard'])->name('admin.dashboard')->middleware('redirect.to.dashboard.if.authenticated');
+
 Route::group(['prefix' =>'admin', 'middleware' => ['redirect.to.dashboard.if.authenticated']], function(){
+    Route::get('/dashboard', [\App\Http\Controllers\ControlPanel\DashboardController::class, 'loadDashboard'])->name('admin.dashboard');
     Route::resource('categories',\App\Http\Controllers\ControlPanel\CategoryController::class);
 
     Route::get('/categories/destroy/{id}', [\App\Http\Controllers\ControlPanel\CategoryController::class, 'destroy'])->name('categories.destroy');
@@ -343,7 +412,14 @@ Route::group(['prefix' =>'admin', 'middleware' => ['redirect.to.dashboard.if.aut
 
 
 
-
+Route::resource('shops', \App\Http\Controllers\AccountPanel\ShopController::class);
+Route::get('/track_your_order', 'HomeController@trackOrder')->name('orders.track');
+Route::get('/instamojo/payment/pay-success', 'InstamojoController@success')->name('instamojo.success');
+Route::post('rozer/payment/pay-success', 'RazorpayController@payment')->name('payment.rozer');
+Route::get('/paystack/payment/callback', 'PaystackController@handleGatewayCallback');
+Route::get('/vogue-pay', 'VoguePayController@showForm');
+Route::get('/vogue-pay/success/{id}', 'VoguePayController@paymentSuccess');
+Route::get('/vogue-pay/failure/{id}', 'VoguePayController@paymentFailure');
 
 
 

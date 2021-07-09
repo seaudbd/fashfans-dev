@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    public function user(){
+    protected $guarded = [];
+    protected $table = 'customers';
+
+    public function user() {
     	return $this->belongsTo(user::class);
     }
 }

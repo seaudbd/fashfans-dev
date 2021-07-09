@@ -421,7 +421,21 @@
 <script type="text/javascript">
 
     $(document).on('click', '#user_icon', function () {
-        $('#user_login_modal').modal('show');
+        $.ajax({
+            method: 'get',
+            url: '{{ url('is/user/logged/in') }}',
+            success: function (result) {
+                console.log(result);
+                if (result.is_user_logged_in === true) {
+                    location = '{{ url('account/dashboard') }}';
+                } else {
+                    $('#user_login_modal').modal('show');
+                }
+            },
+            error: function (xhr) {
+                console.log(xhr)
+            }
+        });
     });
 
     let popover;

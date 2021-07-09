@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -32,6 +34,9 @@ class LoginController extends Controller
                 $user->provider_id = $googleUser->getId();
                 $user->avatar = $googleUser->getAvatar();
                 $user->save();
+                $customer = new Customer();
+                $customer->user_id = $user->id;
+                $customer->save();
                 Auth::login($user);
                 return redirect($redirectUrl);
 
@@ -75,7 +80,7 @@ class LoginController extends Controller
 
     public function isUserLoggedIn() {
         if (Auth::check()) {
-            return response()->json(['is_user_logged_in' => true]);
+            return response()->json(['is_user_logged_in' => true, 'user' => \auth()->user()]);
         } else {
             return response()->json(['is_user_logged_in' => false]);
         }
