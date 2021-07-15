@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')
+@extends('Layouts.account_panel')
 
 @section('content')
 
@@ -7,9 +7,9 @@
             <div class="row cols-xs-space cols-sm-space cols-md-space">
                 <div class="col-lg-3 d-none d-lg-block">
                     @if(Auth::user()->user_type == 'seller')
-                        @include('frontend.inc.seller_side_nav')
+                        @include('AccountPanel.inc.seller_side_nav')
                     @elseif(Auth::user()->user_type == 'customer')
-                        @include('frontend.inc.customer_side_nav')
+                        @include('AccountPanel.inc.customer_side_nav')
                     @endif
                 </div>
 
@@ -27,7 +27,7 @@
                                     <div class="float-md-right">
                                         <ul class="breadcrumb">
                                             <li><a href="{{ route('home') }}">{{__('Home')}}</a></li>
-                                            <li><a href="{{ route('dashboard') }}">{{__('Dashboard')}}</a></li>
+                                            <li><a href="{{ route('account.dashboard') }}">{{__('Dashboard')}}</a></li>
                                             <li class="active"><a href="{{ route('profile') }}">{{__('Manage Profile')}}</a></li>
                                         </ul>
                                     </div>
@@ -110,7 +110,7 @@
                                         <div class="col-md-10">
                                             <div class="mb-3">
                                                 <select class="form-control mb-3 selectpicker" data-placeholder="Select your country" name="country">
-                                                    @foreach (\App\Country::all() as $key => $country)
+                                                    @foreach (App\Models\Country::all() as $key => $country)
                                                         <option value="{{ $country->code }}" <?php if(Auth::user()->country == $country->code) echo "selected";?> >{{ $country->name }}</option>
                                                     @endforeach
                                                 </select>

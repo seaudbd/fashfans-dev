@@ -386,15 +386,23 @@
                     <div class="text-center text-white fw-bold" style="font-size: 30px;">FashFans</div>
 
                     <div class="mt-5 text-center">
-                        <a href="{{ url('auth/facebook/redirect') }}" class="btn btn-outline-info" style="border-color: #ffffff; color: #ffffff; padding: 8px 35px; font-size: 13px;"><i class="fab fa-facebook-f"></i> Login with Facebook</a>
+                        <a href="{{ url('auth/facebook/redirect') }}" class="btn btn-outline-info" style="border-color: #7d80a27a; color: #ffffff; padding: 8px 35px; font-size: 13px;">
+                            <div><i class="fab fa-facebook-f" style="color: #3b5998; font-size: 80px;"></i></div>
+                            <div class="mt-2">LOG IN WITH FACEBOOK</div>
+                        </a>
                     </div>
-                    <div class="text-center mt-2"><span style="font-size: 10px; color: #ffffff;">------ OR ------</span></div>
+                    <div class="text-center mt-2"><span style="font-size: 10px; color: #ffffff;">OR</span></div>
                     <div class="mt-2 text-center">
-                        <a href="{{ url('auth/google/redirect') }}" class="btn btn-outline-info" style="border-color: #ffffff; color: #ffffff; padding: 8px 35px; font-size: 13px;"><i class="fab fa-google"></i> Login with Google</a>
+{{--                        <a href="{{ url('auth/google/redirect') }}" class="btn btn-outline-info" style="border-color: #ff9191; color: #ffffff; padding: 8px 35px; font-size: 13px;"><i class="fab fa-google me-3" style="color: #4285F4; font-size: 20px;"></i> LOG IN WITH GOOGLE</a>--}}
+                        <a href="{{ url('auth/google/redirect') }}" class="btn btn-outline-info" style="border-color: #ff979166; color: #ffffff; padding: 8px 35px; font-size: 13px;">
+                            <div><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="LgbsSe-Bz112c"><g><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></g></svg></div>
+                            <div class="mt-2">LOG IN WITH GOOGLE</div>
+                        </a>
                     </div>
 
-                    <div class="border-top mt-5"></div>
-                    <div class="mt-2 text-center">
+                    <div class="mb-5"></div>
+                    <hr>
+                    <div class="mt-3 text-center">
                         <span style="color: #ffffff; font-size: 12px;">TERMS OF USE</span>
                     </div>
 

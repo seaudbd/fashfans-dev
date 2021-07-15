@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -21,7 +21,9 @@ use Illuminate\Support\Facades\URL;
 class SocialPostController extends Controller
 {
     public function createPost(Request $request)
-    {	
+    {
+
+
     	if ($request->get('content') || $request->image || $request->video)
     	{
 	        $shop  = Shop::where('user_id', Auth::user()->id)->first();
@@ -36,7 +38,7 @@ class SocialPostController extends Controller
 	        $post->content = $request->get('content');
 	        $post->user_id = Auth::user()->id;
 
-	        if ($request->hasFile('image')) 
+	        if ($request->hasFile('image'))
 	        {
 	            $image = $request->file('image');
 	            $destinationPath = 'uploads/social/';
@@ -44,7 +46,7 @@ class SocialPostController extends Controller
 	            $image->move(public_path($destinationPath), $imageName);
 	            $post->image = $destinationPath.$imageName;
 
-	        }elseif ($request->hasFile('video')) 
+	        }elseif ($request->hasFile('video'))
 	        {
 	        	$video = $request->file('video');
                 $destinationPath ='uploads/social/';
@@ -55,9 +57,9 @@ class SocialPostController extends Controller
 
 	    	if($post->save())
 	    	{
-	    		if (env('MAIL_USERNAME') != null && count($shop->followers)) 
+	    		if (env('MAIL_USERNAME') != null && count($shop->followers))
 	    		{
-	    			foreach ($shop->followers as $users) 
+	    			foreach ($shop->followers as $users)
 	    			{
 	    				$f_user = User::where('id', $users->user_id)->first();
 		    			$array['view'] = 'emails.post';
@@ -102,7 +104,7 @@ class SocialPostController extends Controller
 	    	$post = Post::find($request->post_id);
 	        $post->content = $request->get('content');
 
-	        if ($request->hasFile('image')) 
+	        if ($request->hasFile('image'))
 	        {
 	            $image = $request->file('image');
 	            $destinationPath = 'uploads/social/';
@@ -111,7 +113,7 @@ class SocialPostController extends Controller
 	            $image->move(public_path($destinationPath), $imageName);
 	            $post->image = $destinationPath.$imageName;
 
-	        }elseif ($request->hasFile('video')) 
+	        }elseif ($request->hasFile('video'))
 	        {
 	        	$video = $request->file('video');
                 $destinationPath ='uploads/social/';

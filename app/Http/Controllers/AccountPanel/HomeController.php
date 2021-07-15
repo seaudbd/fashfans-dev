@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -114,15 +114,15 @@ class HomeController extends Controller
         }
     }
 
-    
+
 
     public function profile(Request $request)
     {
         if(Auth::user()->user_type == 'customer'){
-            return view('frontend.customer.profile');
+            return view('AccountPanel.customer.profile');
         }
         elseif(Auth::user()->user_type == 'seller'){
-            return view('frontend.seller.profile');
+            return view('AccountPanel.seller.profile');
         }
     }
 
@@ -173,26 +173,26 @@ class HomeController extends Controller
         }
 
         $seller = $user->seller;
-        $seller->cash_on_delivery_status = $request->cash_on_delivery_status;
-        $seller->sslcommerz_status = $request->sslcommerz_status;
+        $seller->cash_on_delivery_status = $request->cash_on_delivery_status !== null ? $request->cash_on_delivery_status : $seller->cash_on_delivery_status;
+        $seller->sslcommerz_status = $request->sslcommerz_status !== null ? $request->sslcommerz_status : $seller->sslcommerz_status;
         $seller->ssl_store_id = $request->ssl_store_id;
         $seller->ssl_password = $request->ssl_password;
-        $seller->paypal_status = $request->paypal_status;
+        $seller->paypal_status = $request->paypal_status !== null ? $request->paypal_status : $seller->paypal_status;
         $seller->paypal_client_id = $request->paypal_client_id;
         $seller->paypal_client_secret = $request->paypal_client_secret;
-        $seller->stripe_status = $request->stripe_status;
+        $seller->stripe_status = $request->stripe_status !== null ? $request->stripe_status : $seller->stripe_status;
         $seller->stripe_key = $request->stripe_key;
         $seller->stripe_secret = $request->stripe_secret;
-        $seller->instamojo_status = $request->instamojo_status;
+        $seller->instamojo_status = $request->instamojo_status !== null ? $request->instamojo_status : $seller->instamojo_status;
         $seller->instamojo_api_key = $request->instamojo_api_key;
         $seller->instamojo_token = $request->instamojo_token;
-        $seller->razorpay_status = $request->razorpay_status;
+        $seller->razorpay_status = $request->razorpay_status !== null ? $request->razorpay_status : $seller->razorpay_status;
         $seller->razorpay_api_key = $request->razorpay_api_key;
         $seller->razorpay_secret = $request->razorpay_secret;
-        $seller->paystack_status = $request->paystack_status;
+        $seller->paystack_status = $request->paystack_status !== null ? $request->paystack_status : $seller->paystack_status;
         $seller->paystack_public_key = $request->paystack_public_key;
         $seller->paystack_secret_key = $request->paystack_secret_key;
-        $seller->voguepay_status = $request->voguepay_status;
+        $seller->voguepay_status = $request->voguepay_status !== null ? $request->voguepay_status : $seller->voguepay_status;
         $seller->voguepay_merchand_id = $request->voguepay_merchand_id;
 
         if($user->save() && $seller->save()){
@@ -266,7 +266,7 @@ class HomeController extends Controller
         $shop  = Shop::where('slug', $slug)->first();
         $posts = Post::where('user_id', $shop->user->id)->orderBy('created_at', 'desc')->paginate(2);
 
-        if ($request->ajax()) 
+        if ($request->ajax())
         {
             $view = view('frontend.inc.social_posts', compact('posts'))->render();
             return response()->json(['html' => $view]);
@@ -275,10 +275,10 @@ class HomeController extends Controller
         if($shop!=null){
             $seller = Seller::where('user_id', $shop->user_id)->first();
             if ($seller->verification_status != 0){
-                return view('frontend.seller_shop', compact('shop'));
+                return view('AccountPanel.seller_shop', compact('shop'));
             }
             else{
-                return view('frontend.seller_shop_without_verification', compact('shop', 'seller'));
+                return view('AccountPanel.seller_shop_without_verification', compact('shop', 'seller'));
             }
         }
         abort(404);
@@ -288,7 +288,7 @@ class HomeController extends Controller
     {
         $shop  = Shop::where('slug', $slug)->first();
         if($shop!=null && $type != null){
-            return view('frontend.seller_shop', compact('shop', 'type'));
+            return view('AccountPanel.seller_shop', compact('shop', 'type'));
         }
         abort(404);
     }
@@ -313,7 +313,7 @@ class HomeController extends Controller
     public function show_product_upload_form(Request $request)
     {
         $categories = Category::all();
-        return view('frontend.seller.product_upload', compact('categories'));
+        return view('AccountPanel.seller.product_upload', compact('categories'));
     }
 
     public function show_product_edit_form(Request $request, $id)
@@ -326,7 +326,7 @@ class HomeController extends Controller
     public function seller_product_list(Request $request)
     {
         $products = Product::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(10);
-        return view('frontend.seller.products', compact('products'));
+        return view('AccountPanel.seller.products', compact('products'));
     }
 
     public function ajax_search(Request $request)
@@ -537,23 +537,23 @@ class HomeController extends Controller
     }
 
     public function sellerpolicy(){
-        return view("frontend.policies.sellerpolicy");
+        return view("AccountPanel.policies.sellerpolicy");
     }
 
     public function returnpolicy(){
-        return view("frontend.policies.returnpolicy");
+        return view("AccountPanel.policies.returnpolicy");
     }
 
     public function supportpolicy(){
-        return view("frontend.policies.supportpolicy");
+        return view("AccountPanel.policies.supportpolicy");
     }
 
     public function terms(){
-        return view("frontend.policies.terms");
+        return view("AccountPanel.policies.terms");
     }
 
     public function privacypolicy(){
-        return view("frontend.policies.privacypolicy");
+        return view("AccountPanel.policies.privacypolicy");
     }
 
     public function get_pick_ip_points(Request $request)

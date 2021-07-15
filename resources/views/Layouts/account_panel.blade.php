@@ -44,7 +44,7 @@
             @endif
 
         <!-- Favicon -->
-            <link name="favicon" type="image/x-icon" href="{{ asset(App\Models\GeneralSetting::first()->favicon) }}" rel="shortcut icon" />
+            <link rel="shortcut icon" href="{{ asset('storage/images/application/favicon.png') }}">
 
             <title>@yield('meta_title', config('app.name', 'Laravel'))</title>
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,15 +34,15 @@ class SocialController extends Controller
     // Like Post
     public function likePost(Request $request)
     {
-        if (Auth::check()) 
+        if (Auth::check())
         {
-            if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'seller') 
+            if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'seller')
             {
                 $user_id = Auth::user()->id;
                 $liked = Like::where('post_id', $request->post_id)
                                     ->where('user_id', $user_id)->first();
 
-                if (!$liked) 
+                if (!$liked)
                 {
                     Like::create([
                         'post_id' => $request->post_id,
@@ -51,7 +51,7 @@ class SocialController extends Controller
 
                     $likes = Like::where('post_id', $request->post_id)->get();
                     return response()->json([
-                        'success'=>'done', 
+                        'success'=>'done',
                         'likes' => count($likes)
                     ]);
                 }
@@ -78,7 +78,7 @@ class SocialController extends Controller
 
     // Post Comment
     public function postComment(Request $request)
-    { 
+    {
         $user_id = Auth::user()->id;
         $comment = Comment::create([
             'post_id' => $request->post_id,
@@ -104,7 +104,7 @@ class SocialController extends Controller
             $name = '<a href="'.route('shop.visit', $shop->slug).'">'.$shop->name.'</a>';
         }
 
-        $html = 
+        $html =
         '<li class="single_comment_'.$request->post_id.'" id="comment_'.$comment->id.'">
             <div class="comet-avatar">
                 '.$image.'
@@ -158,7 +158,7 @@ class SocialController extends Controller
                                 ->skip($skip)->take($take)
                                 ->orderBy('created_at', 'desc')
                                 ->get();
-        
+
             return response()->json(view('frontend.inc.post_comments', [
                                     'comments' => $comments,
                                     'post' => $post
@@ -171,15 +171,15 @@ class SocialController extends Controller
 
     public function followShop(Request $request)
     {
-        if (Auth::check()) 
+        if (Auth::check())
         {
-            if (Auth::user()->user_type == 'customer') 
+            if (Auth::user()->user_type == 'customer')
             {
                 $user_id = Auth::user()->id;
                 $followed = Follower::where('shop_id', $request->shop_id)
                                     ->where('user_id', $user_id)->first();
 
-                if (!$followed) 
+                if (!$followed)
                 {
                     Follower::create([
                         'shop_id' => $request->shop_id,
@@ -188,7 +188,7 @@ class SocialController extends Controller
 
                     $followers = Follower::where('shop_id', $request->shop_id)->get();
                     return response()->json([
-                        'success'=>'done', 
+                        'success'=>'done',
                         'followers' => count($followers)
                     ]);
                 }

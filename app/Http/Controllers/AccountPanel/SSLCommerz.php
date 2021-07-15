@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 use App\Models\BusinessSetting;
 use App\Models\Seller;
 use Illuminate\Support\Facades\Session;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -50,7 +50,7 @@ class MessageController extends Controller
             $conversation->sender_viewed ="1";
         }
         $conversation->save();
-        
+
         return back();
     }
 

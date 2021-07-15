@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class WishlistController extends Controller
     public function index()
     {
         $wishlists = Wishlist::where('user_id', Auth::user()->id)->paginate(9);
-        return view('frontend.view_wishlist', compact('wishlists'));
+        return view('AccountPanel.view_wishlist', compact('wishlists'));
     }
 
     /**

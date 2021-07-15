@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')
+@extends('Layouts.account_panel')
 
 @section('content')
 
@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row cols-xs-space cols-sm-space cols-md-space">
                 <div class="col-lg-3 d-none d-lg-block">
-                    @include('frontend.inc.seller_side_nav')
+                    @include('AccountPanel.inc.seller_side_nav')
                 </div>
 
                 <div class="col-lg-9">
@@ -23,7 +23,7 @@
                                     <div class="float-md-right">
                                         <ul class="breadcrumb">
                                             <li><a href="{{ route('home') }}">{{__('Home')}}</a></li>
-                                            <li><a href="{{ route('dashboard') }}">{{__('Dashboard')}}</a></li>
+                                            <li><a href="{{ route('account.dashboard') }}">{{__('Dashboard')}}</a></li>
                                             <li><a href="{{ route('seller.products') }}">{{__('Products')}}</a></li>
                                             <li class="active"><a href="{{ route('seller.products.upload') }}">{{__('Add New Product')}}</a></li>
                                         </ul>
@@ -239,7 +239,7 @@
         								</div>
         								<div class="col-12 col-md-7 col-xl-8 order-3 order-md-0 mt-2 mt-md-0">
         									<select class="form-control color-var-select" name="colors[]" id="colors" multiple>
-        										@foreach (\App\Color::orderBy('name', 'asc')->get() as $key => $color)
+        										@foreach (App\Models\Color::orderBy('name', 'asc')->get() as $key => $color)
         											<option value="{{ $color->code }}">{{ $color->name }}</option>
         										@endforeach
         									</select>

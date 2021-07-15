@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class ConversationController extends Controller
     {
         if (BusinessSetting::where('type', 'conversation_system')->first()->value == 1) {
             $conversations = Conversation::where('sender_id', Auth::user()->id)->orWhere('receiver_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(5);
-            return view('frontend.conversations.index', compact('conversations'));
+            return view('AccountPanel.conversations.index', compact('conversations'));
         }
         else {
             flash(__('Conversation is disabled at this moment'))->warning();

@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')
+@extends('Layouts.account_panel')
 
 @section('content')
 
@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row cols-xs-space cols-sm-space cols-md-space">
                 <div class="col-lg-3 d-none d-lg-block">
-                    @include('frontend.inc.seller_side_nav')
+                    @include('AccountPanel.inc.seller_side_nav')
                 </div>
 
                 <div class="col-lg-9">
@@ -23,7 +23,7 @@
                                     <div class="float-md-right">
                                         <ul class="breadcrumb">
                                             <li><a href="{{ route('home') }}">{{__('Home')}}</a></li>
-                                            <li><a href="{{ route('dashboard') }}">{{__('Dashboard')}}</a></li>
+                                            <li><a href="{{ route('account.dashboard') }}">{{__('Dashboard')}}</a></li>
                                             <li><a href="{{ route('seller.products') }}">{{__('Products')}}</a></li>
                                         </ul>
                                     </div>

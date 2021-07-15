@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class SellerWithdrawRequestController extends Controller
     public function index()
     {
         $seller_withdraw_requests = SellerWithdrawRequest::where('user_id', Auth::user()->seller->id)->paginate(9);
-        return view('frontend.seller.seller_withdraw_requests.index', compact('seller_withdraw_requests'));
+        return view('AccountPanel.seller.seller_withdraw_requests.index', compact('seller_withdraw_requests'));
     }
 
     public function request_index()

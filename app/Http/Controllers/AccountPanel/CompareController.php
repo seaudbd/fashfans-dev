@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class CompareController extends Controller
     {
         //dd($request->session()->get('compare'));
         $categories = Category::all();
-        return view('frontend.view_compare', compact('categories'));
+        return view('AccountPanel.view_compare', compact('categories'));
     }
 
     //clears the session data for compare

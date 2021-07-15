@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class PaymentController extends Controller
     public function index()
     {
         $payments = Payment::where('seller_id', Auth::user()->seller->id)->paginate(9);
-        return view('frontend.seller.payment_history', compact('payments'));
+        return view('AccountPanel.seller.payment_history', compact('payments'));
     }
 
     /**

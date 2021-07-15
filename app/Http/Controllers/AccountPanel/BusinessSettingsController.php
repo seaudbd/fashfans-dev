@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -268,5 +268,5 @@ class BusinessSettingsController extends Controller
         return back();
     }
 
-   
+
 }

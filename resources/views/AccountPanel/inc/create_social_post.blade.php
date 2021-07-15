@@ -30,5 +30,5 @@
             </div>
             <button id="post_btn" class="post-btn" type="submit" data-ripple="">Post</button>
         </form>
-    </div>  
+    </div>
 </div>

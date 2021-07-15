@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')
+@extends('Layouts.account_panel')
 
 @section('content')
 
@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row cols-xs-space cols-sm-space cols-md-space">
                 <div class="col-lg-3 d-none d-lg-block">
-                    @include('frontend.inc.seller_side_nav')
+                    @include('AccountPanel.inc.seller_side_nav')
                 </div>
 
                 <div class="col-lg-9">
@@ -24,7 +24,7 @@
                                     <div class="float-md-right">
                                         <ul class="breadcrumb">
                                             <li><a href="{{ route('home') }}">{{__('Home')}}</a></li>
-                                            <li><a href="{{ route('dashboard') }}">{{__('Dashboard')}}</a></li>
+                                            <li><a href="{{ route('account.dashboard') }}">{{__('Dashboard')}}</a></li>
                                             <li class="active"><a href="{{ route('shops.index') }}">{{__('Shop Settings')}}</a></li>
                                         </ul>
                                     </div>
@@ -38,7 +38,7 @@
                                 {{__('Verification info')}}
                             </div>
                             @php
-                                $verification_form = \App\BusinessSetting::where('type', 'verification_form')->first()->value;
+                                $verification_form = App\Models\BusinessSetting::where('type', 'verification_form')->first()->value;
                             @endphp
                             <div class="form-box-content p-3">
                                 @foreach (json_decode($verification_form) as $key => $element)

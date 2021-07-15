@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class WalletController extends Controller
     public function index()
     {
         $wallets = Wallet::where('user_id', Auth::user()->id)->paginate(9);
-        return view('frontend.wallet', compact('wallets'));
+        return view('AccountPanel.wallet', compact('wallets'));
     }
 
     public function recharge(Request $request)

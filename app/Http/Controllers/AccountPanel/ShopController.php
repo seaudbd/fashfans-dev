@@ -216,7 +216,7 @@ class ShopController extends Controller
     {
         if(Auth::user()->seller->verification_info == null){
             $shop = Auth::user()->shop;
-            return view('frontend.seller.verify_form', compact('shop'));
+            return view('AccountPanel.seller.verify_form', compact('shop'));
         }
         else {
             flash(__('Sorry! You have sent verification request already.'))->error();
@@ -226,6 +226,8 @@ class ShopController extends Controller
 
     public function verify_form_store(Request $request)
     {
+
+
         $data = array();
         $i = 0;
         foreach (json_decode(BusinessSetting::where('type', 'verification_form')->first()->value) as $key => $element) {
@@ -257,7 +259,7 @@ class ShopController extends Controller
         $seller->verification_info = json_encode($data);
         if($seller->save()){
             flash(__('Your shop verification request has been submitted successfully!'))->success();
-            return redirect()->route('dashboard');
+            return redirect()->route('account.dashboard');
         }
 
         flash(__('Sorry! Something went wrong.'))->error();

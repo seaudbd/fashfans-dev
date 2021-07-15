@@ -1,15 +1,15 @@
 <div class="col-xl-6" id="posts">
 	@auth
 	@if(Auth::user()->id == $shop->user->id)
-        @include('frontend.inc.create_social_post')
+        @include('AccountPanel.inc.create_social_post')
     @endif
     @endauth
 
     @php
-		$posts = \App\Post::where('user_id', $shop->user->id)->orderBy('created_at', 'desc')->paginate(2);
+		$posts = App\Models\Post::where('user_id', $shop->user->id)->orderBy('created_at', 'desc')->paginate(2);
 	@endphp
 
-	@include('frontend.inc.social_posts')
+	@include('AccountPanel.inc.social_posts')
 </div>
 <div class="col-xl-3">
 	<aside class="sidebar static right">
@@ -35,7 +35,7 @@
 				@else
 					<li>No Followers Found</li>
 				@endif
-				
+
 			</ul><br><br>
 		</div><!-- who's following -->
 	</aside>

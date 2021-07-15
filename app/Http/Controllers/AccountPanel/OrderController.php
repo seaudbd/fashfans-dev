@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -40,7 +40,7 @@ class OrderController extends Controller
             $order->save();
         }
 
-        return view('frontend.seller.orders', compact('orders'));
+        return view('AccountPanel.seller.orders', compact('orders'));
     }
 
     /**

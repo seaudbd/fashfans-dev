@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class PurchaseHistoryController extends Controller
     public function index()
     {
         $orders = Order::where('user_id', Auth::user()->id)->orderBy('code', 'desc')->paginate(9);
-        return view('frontend.purchase_history', compact('orders'));
+        return view('AccountPanel.purchase_history', compact('orders'));
     }
 
     public function purchase_history_details(Request $request)

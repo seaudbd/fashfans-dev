@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class SupportTicketController extends Controller
     public function index()
     {
         $tickets = Ticket::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(9);
-        return view('frontend.support_ticket.index', compact('tickets'));
+        return view('AccountPanel.support_ticket.index', compact('tickets'));
     }
 
     public function admin_index(Request $request)
@@ -52,7 +52,7 @@ class SupportTicketController extends Controller
      */
     public function store(Request $request)
     {
-        //dd();
+
         $ticket = new Ticket;
         $ticket->code = max(100000, (Ticket::latest()->first() != null ? Ticket::latest()->first()->code + 1 : 0));
         $ticket->user_id = Auth::user()->id;
@@ -152,7 +152,7 @@ class SupportTicketController extends Controller
         $ticket->client_viewed = 1;
         $ticket->save();
         $ticket_replies = $ticket->ticketreplies;
-        return view('frontend.support_ticket.show', compact('ticket','ticket_replies'));
+        return view('AccountPanel.support_ticket.show', compact('ticket','ticket_replies'));
     }
 
     public function admin_show($id)

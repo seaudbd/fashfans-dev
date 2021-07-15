@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,10 +14,10 @@ use App\Models\Post;
 class NewsFeedController extends Controller
 {
     public function index(Request $request)
-    {	
+    {
     	$posts = Post::orderBy('created_at', 'desc')->paginate(2);
 
-    	if ($request->ajax()) 
+    	if ($request->ajax())
         {
         	$view = view('frontend.inc.social_posts', compact('posts'))->render();
             return response()->json(['html' => $view]);

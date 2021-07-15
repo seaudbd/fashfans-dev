@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ControlPanel;
+namespace App\Http\Controllers\AccountPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -39,7 +39,7 @@ class ReviewController extends Controller
             $review->save();
         }
 
-        return view('frontend.seller.reviews', compact('reviews'));
+        return view('AccountPanel.seller.reviews', compact('reviews'));
     }
 
     /**

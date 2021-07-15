@@ -33,6 +33,7 @@ class LoginController extends Controller
                 $user->email = $googleUser->getEmail();
                 $user->provider_id = $googleUser->getId();
                 $user->avatar = $googleUser->getAvatar();
+                $user->avatar_original = $googleUser->getAvatar();
                 $user->save();
                 $customer = new Customer();
                 $customer->user_id = $user->id;
@@ -67,6 +68,7 @@ class LoginController extends Controller
                 $user->email = $facebookUser->getEmail();
                 $user->provider_id = $facebookUser->getId();
                 $user->avatar = $facebookUser->getAvatar();
+                $user->avatar_original = $facebookUser->getAvatar();
                 $user->save();
                 Auth::login($user);
                 return redirect($redirectUrl);
