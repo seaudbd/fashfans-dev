@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2021 at 09:11 PM
+-- Generation Time: Jul 15, 2021 at 08:45 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.4.16
 
@@ -171,10 +171,10 @@ INSERT INTO `categories` (`id`, `name`, `commision_rate`, `banner`, `icon`, `fea
 (1, 'Women Clothing', 0.00, 'uploads/categories/banner/category-banner.jpg', 'uploads/categories/icon/KjJP9wuEZNL184XVUk3S7EiZ8NnBN99kiU4wdvp3.png', 0, 1, 'Men', 'Demo category 1', NULL, '2021-04-01 07:47:15', '2019-08-06 06:06:58'),
 (2, 'Beauty & Fashion', 0.00, 'uploads/categories/banner/category-banner.jpg', 'uploads/categories/icon/h9XhWwI401u6sRoLITEk9SUMRAlWN8moGrpPfS6I.png', 0, 1, 'Women', 'Demo category 2', NULL, '2021-04-01 07:47:18', '2019-08-06 06:06:58'),
 (3, 'Daily Needs', 0.00, 'uploads/categories/banner/category-banner.jpg', 'uploads/categories/icon/rKAPw5rNlS84JtD9ZQqn366jwE11qyJqbzAe5yaA.png', 0, 1, 'Children', 'Demo category 3', NULL, '2021-04-01 07:47:20', '2019-08-06 06:06:58'),
-(4, 'Haute Couture', 0.00, 'uploads/categories/banner/haute_couture.jpg', 'uploads/categories/icon/haute_couture.jpg', 1, 1, NULL, 'Demo category 4', NULL, '2021-05-16 20:17:55', '2021-04-01 08:38:04'),
-(5, 'Street Wear', 0.00, 'uploads/categories/banner/street_wear.jpg', 'uploads/categories/icon/street_wear.jpg', 1, 1, NULL, 'Demo category 5', NULL, '2021-05-16 20:17:58', '2021-04-01 08:39:17'),
-(6, 'Vintage', 0.00, 'uploads/categories/banner/vintage.jpg', 'uploads/categories/icon/vintage.jpg', 1, 1, NULL, 'Demo category 6', NULL, '2021-05-16 20:18:00', '2021-04-01 08:39:17'),
-(7, 'Mix and Match', 0.00, 'uploads/categories/banner/mix_and_match.jpg', 'uploads/categories/icon/mix_and_match.jpg', 1, 1, NULL, 'Demo category 7', NULL, '2021-05-18 15:28:18', '2021-04-01 08:39:17'),
+(4, 'Haute Couture', 0.00, 'uploads/categories/banner/haute_couture.jpg', 'uploads/categories/icon/haute_couture.jpg', 1, 1, 'Demo category 4', 'Demo category 4', NULL, '2021-07-03 19:15:42', '2021-04-01 08:38:04'),
+(5, 'Street Wear', 0.00, 'uploads/categories/banner/street_wear.jpg', 'uploads/categories/icon/street_wear.jpg', 1, 1, 'Demo category 5', 'Demo category 5', NULL, '2021-07-03 19:15:36', '2021-04-01 08:39:17'),
+(6, 'Vintage', 0.00, 'uploads/categories/banner/vintage.jpg', 'uploads/categories/icon/vintage.jpg', 1, 1, 'Demo category 6', 'Demo category 6', NULL, '2021-07-03 19:15:31', '2021-04-01 08:39:17'),
+(7, 'Mix and Match', 0.00, 'uploads/categories/banner/mix_and_match.jpg', 'uploads/categories/icon/mix_and_match.jpg', 1, 1, 'Demo category 7', 'Demo category 7', NULL, '2021-07-03 19:15:23', '2021-04-01 08:39:17'),
 (9, 'Food and Beverage', 0.00, 'uploads/categories/banner/NQRq9hqirUfXqml6IeFI5ZfG4F3Mjyu224lAdVl4.jpg', 'uploads/categories/icon/l5lV8bbB71ZDQjnDB65CQWP4NKsjZ1AAaboii7Gy.jpg', 0, 1, 'Food-and-Beverage', 'Food and Beverage', NULL, '2021-05-16 20:57:56', '2021-05-16 14:57:56');
 
 -- --------------------------------------------------------
@@ -780,6 +780,14 @@ CREATE TABLE `customers` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `user_id`, `created_at`, `updated_at`) VALUES
+(2, 8, '2021-07-12 09:29:13', '2021-07-12 09:29:13'),
+(3, 9, '2021-07-13 10:27:57', '2021-07-13 10:27:57');
+
 -- --------------------------------------------------------
 
 --
@@ -1349,12 +1357,12 @@ CREATE TABLE `searches` (
 
 CREATE TABLE `sellers` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `verification_status` int(1) NOT NULL DEFAULT 0,
   `verification_info` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `cash_on_delivery_status` int(1) NOT NULL DEFAULT 0,
   `sslcommerz_status` int(1) NOT NULL DEFAULT 0,
-  `stripe_status` int(1) DEFAULT 0,
+  `stripe_status` int(1) NOT NULL DEFAULT 0,
   `paypal_status` int(1) NOT NULL DEFAULT 0,
   `paypal_client_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `paypal_client_secret` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1388,7 +1396,8 @@ INSERT INTO `sellers` (`id`, `user_id`, `verification_status`, `verification_inf
 (1, 1, 1, '[{\"type\":\"text\",\"label\":\"Name\",\"value\":\"Mr. Seller\"},{\"type\":\"select\",\"label\":\"Marital Status\",\"value\":\"Married\"},{\"type\":\"multi_select\",\"label\":\"Company\",\"value\":\"[\\\"Company\\\"]\"},{\"type\":\"select\",\"label\":\"Gender\",\"value\":\"Male\"},{\"type\":\"file\",\"label\":\"Image\",\"value\":\"uploads\\/verification_form\\/CRWqFifcbKqibNzllBhEyUSkV6m1viknGXMEhtiW.png\"}]', 1, 1, 1, 0, NULL, NULL, 'activ5c3c5dac9254d', 'activ5c3c5dac9254d@ssl', 'pk_test_CqAfBW85ZifDyuEOhGaD4ZbE', 'sk_test_mRRMmV4GnBJ4UT7qeLlDe5F8', 0, NULL, NULL, 0, NULL, NULL, 1, 'pk_test_855c5f39d8f662a5d63fabe25ead64fe21018f15', 'sk_test_1175e92519f88e9c665d0b980f53ff1cfffbbc38', 0, NULL, NULL, NULL, 78.40, '2018-10-07 04:42:57', '2020-05-11 18:59:47'),
 (2, 2, 1, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, NULL, 0.00, '2021-03-31 06:14:39', '2021-05-18 12:26:42'),
 (3, 3, 1, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, NULL, 0.00, '2021-03-31 06:32:11', '2021-05-18 12:26:41'),
-(4, 4, 1, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, NULL, 0.00, '2021-03-31 06:32:20', '2021-05-18 12:26:39');
+(4, 4, 1, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, NULL, 0.00, '2021-03-31 06:32:20', '2021-05-18 12:26:39'),
+(6, 8, 1, '[{\"type\":\"text\",\"label\":\"Your name\",\"value\":\"Asraf\"},{\"type\":\"text\",\"label\":\"Shop name\",\"value\":\"Bio Traders\"},{\"type\":\"text\",\"label\":\"Email\",\"value\":\"seaudbd@gmail.com\"},{\"type\":\"text\",\"label\":\"License No\",\"value\":\"123456\"},{\"type\":\"text\",\"label\":\"Full Address\",\"value\":\"Mirpur, Dhaka\"},{\"type\":\"text\",\"label\":\"Phone Number\",\"value\":\"01776648825\"},{\"type\":\"file\",\"label\":\"Tax Papers\",\"value\":\"uploads\\/verification_form\\/AmJHyjKriQx2WBDiLhwsVQi3SgNieJQKaBhHqFzP.png\"}]', 1, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, NULL, 0.00, '2021-07-12 09:32:10', '2021-07-12 09:51:50');
 
 -- --------------------------------------------------------
 
@@ -1464,7 +1473,8 @@ INSERT INTO `shops` (`id`, `user_id`, `name`, `logo`, `sliders`, `address`, `fac
 (1, 1, 'FashFans', 'uploads/shop/logo/fashfans.jpg', '[\"uploads\\/shop\\/sliders\\/fashfans_banner.jpg\",\"uploads\\/shop\\/sliders\\/fashfans_profile_page_image.jpg\",\"uploads\\/shop\\/sliders\\/fashfans_featured_image.jpg\"]', 'Mirpur, Dhaka, Bangladesh', 'www.facebook.com', 'www.google.com', 'www.twitter.com', 'www.youtube.com', 'FashFans', 'FashFans', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut purus viverra, bibendum quam in, pretium turpis. Sed porta ligula et tortor accumsan viverra. Nulla fermentum ipsum et lacus fermentum dapibus. Proin egestas, eros vitae porta euismod, nibh dolor aliquam erat, quis molestie odio felis et est. Maecenas egestas finibus orci.\r\n<br><br>\r\nEget tincidunt ligula pulvinar ornare. In eleifend egestas dictum. Fusce iaculis, lorem quis tincidunt scelerisque, felis nisl tempus ex, vel hendrerit dui purus vel urna. Aenean aliquam dapibus facilisis. Integer efficitur id velit in iaculis.\r\n<br><br>\r\nMaecenas non dui sit amet nisl ultricies euismod. Donec risus diam, ullamcorper non eros at, pulvinar volutpat sem. Phasellus tempus vel nibh sed ultricies. Quisque ut nibh nunc. Nam nisl dolor, cursus sit amet tempus non, pharetra ac purus.\r\n<br><br>\r\nSed viverra volutpat sem vel mattis. Duis porta nisl non fermentum suscipit. Nulla blandit mauris id leo vestibulum, sit amet elementum metus posuere. Etiam elementum ex odio. Phasellus rhoncus commodo dolor facilisis dapibus. Fusce varius sapien ex, a pharetra nisl interdum in. Morbi eget sapien tristique, efficitur sem ac, suscipit velit.', '[]', '2018-11-27 10:23:13', '2020-11-29 05:00:58'),
 (2, 2, 'Giorgio Armani', 'uploads/shop/logo/giorgio_armani.jpg', '[\"uploads\\/shop\\/sliders\\/giorgio_armani_banner.png\",\"uploads\\/shop\\/sliders\\/giorgio_armani_profile_page_image.jpg\",\"uploads\\/shop\\/sliders\\/giorgio_armani_featured_image.jpg\"]', 'Venice, Italy', NULL, NULL, NULL, NULL, 'GeorgioArmani', 'GeorgioArmani', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut purus viverra, bibendum quam in, pretium turpis. Sed porta ligula et tortor accumsan viverra. Nulla fermentum ipsum et lacus fermentum dapibus. Proin egestas, eros vitae porta euismod, nibh dolor aliquam erat, quis molestie odio felis et est. Maecenas egestas finibus orci.\r\n<br><br>\r\nEget tincidunt ligula pulvinar ornare. In eleifend egestas dictum. Fusce iaculis, lorem quis tincidunt scelerisque, felis nisl tempus ex, vel hendrerit dui purus vel urna. Aenean aliquam dapibus facilisis. Integer efficitur id velit in iaculis.\r\n<br><br>\r\nMaecenas non dui sit amet nisl ultricies euismod. Donec risus diam, ullamcorper non eros at, pulvinar volutpat sem. Phasellus tempus vel nibh sed ultricies. Quisque ut nibh nunc. Nam nisl dolor, cursus sit amet tempus non, pharetra ac purus.\r\n<br><br>\r\nSed viverra volutpat sem vel mattis. Duis porta nisl non fermentum suscipit. Nulla blandit mauris id leo vestibulum, sit amet elementum metus posuere. Etiam elementum ex odio. Phasellus rhoncus commodo dolor facilisis dapibus. Fusce varius sapien ex, a pharetra nisl interdum in. Morbi eget sapien tristique, efficitur sem ac, suscipit velit.', NULL, '2021-03-31 06:24:28', '2021-03-31 06:24:28'),
 (3, 3, 'Valentino', 'uploads/shop/logo/valentino.jpg', '[\"uploads\\/shop\\/sliders\\/valentino_banner.jpg\",\"uploads\\/shop\\/sliders\\/valentino_profile_page_image.jpg\",\"uploads\\/shop\\/sliders\\/valentino_featured_image.jpg\"]', 'Paris, France', NULL, NULL, NULL, NULL, 'Valentino', 'Valentino', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut purus viverra, bibendum quam in, pretium turpis. Sed porta ligula et tortor accumsan viverra. Nulla fermentum ipsum et lacus fermentum dapibus. Proin egestas, eros vitae porta euismod, nibh dolor aliquam erat, quis molestie odio felis et est. Maecenas egestas finibus orci.\r\n<br><br>\r\nEget tincidunt ligula pulvinar ornare. In eleifend egestas dictum. Fusce iaculis, lorem quis tincidunt scelerisque, felis nisl tempus ex, vel hendrerit dui purus vel urna. Aenean aliquam dapibus facilisis. Integer efficitur id velit in iaculis.\r\n<br><br>\r\nMaecenas non dui sit amet nisl ultricies euismod. Donec risus diam, ullamcorper non eros at, pulvinar volutpat sem. Phasellus tempus vel nibh sed ultricies. Quisque ut nibh nunc. Nam nisl dolor, cursus sit amet tempus non, pharetra ac purus.\r\n<br><br>\r\nSed viverra volutpat sem vel mattis. Duis porta nisl non fermentum suscipit. Nulla blandit mauris id leo vestibulum, sit amet elementum metus posuere. Etiam elementum ex odio. Phasellus rhoncus commodo dolor facilisis dapibus. Fusce varius sapien ex, a pharetra nisl interdum in. Morbi eget sapien tristique, efficitur sem ac, suscipit velit.', NULL, '2021-03-31 06:30:25', '2021-03-31 06:30:25'),
-(4, 4, 'Coco Chanel', 'uploads/shop/logo/coco_chanel.jpg', '[\"uploads\\/shop\\/sliders\\/coco_chanel_banner.jpg\",\"uploads\\/shop\\/sliders\\/coco_chanel_profile_page_image.jpg\",\"uploads\\/shop\\/sliders\\/coco_chanel_featured_image.jpg\"]', 'Paris, France', NULL, NULL, NULL, NULL, 'CocoChanel', 'CocoChanel', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut purus viverra, bibendum quam in, pretium turpis. Sed porta ligula et tortor accumsan viverra. Nulla fermentum ipsum et lacus fermentum dapibus. Proin egestas, eros vitae porta euismod, nibh dolor aliquam erat, quis molestie odio felis et est. Maecenas egestas finibus orci.\r\n<br><br>\r\nEget tincidunt ligula pulvinar ornare. In eleifend egestas dictum. Fusce iaculis, lorem quis tincidunt scelerisque, felis nisl tempus ex, vel hendrerit dui purus vel urna. Aenean aliquam dapibus facilisis. Integer efficitur id velit in iaculis.\r\n<br><br>\r\nMaecenas non dui sit amet nisl ultricies euismod. Donec risus diam, ullamcorper non eros at, pulvinar volutpat sem. Phasellus tempus vel nibh sed ultricies. Quisque ut nibh nunc. Nam nisl dolor, cursus sit amet tempus non, pharetra ac purus.\r\n<br><br>\r\nSed viverra volutpat sem vel mattis. Duis porta nisl non fermentum suscipit. Nulla blandit mauris id leo vestibulum, sit amet elementum metus posuere. Etiam elementum ex odio. Phasellus rhoncus commodo dolor facilisis dapibus. Fusce varius sapien ex, a pharetra nisl interdum in. Morbi eget sapien tristique, efficitur sem ac, suscipit velit.', NULL, '2021-03-31 06:31:35', '2021-03-31 06:31:35');
+(4, 4, 'Coco Chanel', 'uploads/shop/logo/coco_chanel.jpg', '[\"uploads\\/shop\\/sliders\\/coco_chanel_banner.jpg\",\"uploads\\/shop\\/sliders\\/coco_chanel_profile_page_image.jpg\",\"uploads\\/shop\\/sliders\\/coco_chanel_featured_image.jpg\"]', 'Paris, France', NULL, NULL, NULL, NULL, 'CocoChanel', 'CocoChanel', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut purus viverra, bibendum quam in, pretium turpis. Sed porta ligula et tortor accumsan viverra. Nulla fermentum ipsum et lacus fermentum dapibus. Proin egestas, eros vitae porta euismod, nibh dolor aliquam erat, quis molestie odio felis et est. Maecenas egestas finibus orci.\r\n<br><br>\r\nEget tincidunt ligula pulvinar ornare. In eleifend egestas dictum. Fusce iaculis, lorem quis tincidunt scelerisque, felis nisl tempus ex, vel hendrerit dui purus vel urna. Aenean aliquam dapibus facilisis. Integer efficitur id velit in iaculis.\r\n<br><br>\r\nMaecenas non dui sit amet nisl ultricies euismod. Donec risus diam, ullamcorper non eros at, pulvinar volutpat sem. Phasellus tempus vel nibh sed ultricies. Quisque ut nibh nunc. Nam nisl dolor, cursus sit amet tempus non, pharetra ac purus.\r\n<br><br>\r\nSed viverra volutpat sem vel mattis. Duis porta nisl non fermentum suscipit. Nulla blandit mauris id leo vestibulum, sit amet elementum metus posuere. Etiam elementum ex odio. Phasellus rhoncus commodo dolor facilisis dapibus. Fusce varius sapien ex, a pharetra nisl interdum in. Morbi eget sapien tristique, efficitur sem ac, suscipit velit.', NULL, '2021-03-31 06:31:35', '2021-03-31 06:31:35'),
+(6, 8, 'Bio Traders', 'uploads/shop/logo/A4hRoyqz6bBcSWqfbxzT3WYl8qBsZGaDV0IvhkBC.png', NULL, 'Dhaka, Bangladesh', NULL, NULL, NULL, NULL, 'Bio-Traders-6', 'Bio Traders', 'Bio Traders', '[]', '2021-07-12 09:32:10', '2021-07-12 09:35:25');
 
 -- --------------------------------------------------------
 
@@ -1610,6 +1620,13 @@ CREATE TABLE `tickets` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `tickets`
+--
+
+INSERT INTO `tickets` (`id`, `code`, `user_id`, `subject`, `details`, `files`, `status`, `viewed`, `client_viewed`, `created_at`, `updated_at`) VALUES
+(1, 100000, 8, 'Help', 'I need help.', NULL, 'pending', 0, 1, '2021-07-12 15:53:22', '2021-07-12 09:53:22');
+
 -- --------------------------------------------------------
 
 --
@@ -1661,7 +1678,9 @@ INSERT INTO `users` (`id`, `provider_id`, `user_type`, `name`, `email`, `email_v
 (1, NULL, 'admin', 'FashFans', 'admin@example.com', '2020-05-04 07:05:42', '$2y$10$3VmNfTJfi/YyW7Gd1LcccOhHkPJgnD5djA/M8sL6B6J6cQy5JaRR.', NULL, NULL, 'uploads/users/fashfans.png', NULL, NULL, NULL, NULL, NULL, 0.00, '2020-05-04 07:09:42', '2020-11-26 02:37:31'),
 (2, NULL, 'seller', 'Giorgio Armani', 'giorgio_armani@gmail.com', '2021-03-31 06:06:29', '$2y$10$3VmNfTJfi/YyW7Gd1LcccOhHkPJgnD5djA/M8sL6B6J6cQy5JaRR.', NULL, NULL, 'uploads/users/georgio_armani.png', 'Venice, Italy', 'Italy', 'Venice', NULL, NULL, 0.00, NULL, NULL),
 (3, NULL, 'seller', 'Valentino', 'valentino@gmail.com', '2021-03-31 06:06:29', '$2y$10$3VmNfTJfi/YyW7Gd1LcccOhHkPJgnD5djA/M8sL6B6J6cQy5JaRR.', NULL, NULL, 'uploads/users/valentino.png', 'Paris, France', 'France', 'Paris', NULL, NULL, 0.00, NULL, NULL),
-(4, NULL, 'seller', 'Coco Chanel', 'coco_chanel@gmail.com', '2021-03-31 06:06:29', '$2y$10$3VmNfTJfi/YyW7Gd1LcccOhHkPJgnD5djA/M8sL6B6J6cQy5JaRR.', NULL, NULL, 'uploads/users/coco_chanel.png', 'Paris, France', 'France', 'Paris', NULL, NULL, 0.00, NULL, NULL);
+(4, NULL, 'seller', 'Coco Chanel', 'coco_chanel@gmail.com', '2021-03-31 06:06:29', '$2y$10$3VmNfTJfi/YyW7Gd1LcccOhHkPJgnD5djA/M8sL6B6J6cQy5JaRR.', NULL, NULL, 'uploads/users/coco_chanel.png', 'Paris, France', 'France', 'Paris', NULL, NULL, 0.00, NULL, NULL),
+(8, '117160752593090441810', 'seller', 'Asraf Ud Duha', 'seaudbd@gmail.com', '2021-07-12 09:07:10', NULL, NULL, 'https://lh3.googleusercontent.com/a-/AOh14GgrJAw_h240GbWADnHCZg4u1rRPLtusGsu57S8HDQ=s96-c', 'uploads/7pBF93vHfwRJtojW5E845bTgQDu4YdJSbcmBRhQi.jpg', 'Mirpur, Dhaka', 'BD', 'Dhaka', '1216', '01776648825', 0.00, '2021-07-12 09:29:13', '2021-07-12 09:51:50'),
+(9, '105700686863978459946', 'customer', 'Asraf Ud Duha', 'archiverz.com@gmail.com', NULL, NULL, NULL, 'https://lh3.googleusercontent.com/a/AATXAJyC7khwNjgTzgAvR7E9oLe_t06rrSnPQoSDgYI2=s96-c', 'uploads/users/fPhKFJZGS7RZKDI4om18zqGBH5aIWn0QDB37Ej5W.jpg', 'Mirpur, Dhaka', 'BD', 'Dhaka', '1216', '01776648825', 0.00, '2021-07-13 10:27:57', '2021-07-13 10:31:55');
 
 -- --------------------------------------------------------
 
@@ -2065,7 +2084,7 @@ ALTER TABLE `currencies`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `flash_deals`
@@ -2197,7 +2216,7 @@ ALTER TABLE `searches`
 -- AUTO_INCREMENT for table `sellers`
 --
 ALTER TABLE `sellers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `seller_withdraw_requests`
@@ -2215,7 +2234,7 @@ ALTER TABLE `seo_settings`
 -- AUTO_INCREMENT for table `shops`
 --
 ALTER TABLE `shops`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `sliders`
@@ -2251,7 +2270,7 @@ ALTER TABLE `sub_sub_categories`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ticket_replies`
@@ -2263,7 +2282,7 @@ ALTER TABLE `ticket_replies`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `wallets`
